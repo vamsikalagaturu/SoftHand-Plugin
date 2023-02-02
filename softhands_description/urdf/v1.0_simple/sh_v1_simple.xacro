@@ -154,7 +154,6 @@
 				<namespace>${type}_hand_v1s</namespace>
 				<operation_mode>${operation_mode}</operation_mode>
 
-				<!-- TODO: Insert here the OPTIONAL tags available! -->
 			</plugin>
 		</gazebo>
 
