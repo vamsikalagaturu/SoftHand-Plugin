@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="softhand_homing" params="side type" >
+        
+        <joint name="${side}_hand_${type}_thumb_knuckle_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_thumb_proximal_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_thumb_distal_joint" value="0.0" />
+
+        <joint name="${side}_hand_${type}_index_distal_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_index_proximal_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_index_middle_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_index_distal_joint" value="0.0"/>
+
+        <joint name="${side}_hand_${type}_middle_distal_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_middle_proximal_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_middle_middle_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_middle_distal_joint" value="0.0"/>
+
+        <joint name="${side}_hand_${type}_ring_distal_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_ring_proximal_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_ring_middle_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_ring_distal_joint" value="0.0"/>
+
+        <joint name="${side}_hand_${type}_little_distal_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_little_proximal_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_little_middle_joint" value="0.0"/>
+        <joint name="${side}_hand_${type}_little_distal_joint" value="0.0"/>
+
+    </xacro:macro>  
+
+</robot>
