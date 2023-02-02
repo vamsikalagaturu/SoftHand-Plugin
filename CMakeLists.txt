@@ -1,0 +1,3 @@
+project(softhand-plugins)
+add_subdirectory(softhand_plugin)
+add_subdirectory(softhands_description)
