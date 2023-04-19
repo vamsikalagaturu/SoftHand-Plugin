@@ -39,7 +39,7 @@
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="thumb_v2_simple" params="type ns sign position orientation translation damping">
+  <xacro:macro name="thumb_v2_simple" params="type ns sign position orientation translation damping useMimicTag abd_R inner_R outer_R">
 
     <!-- KNUCKLE -->
     <joint name="${ns}_${type}_knuckle_joint" type="revolute">
@@ -49,6 +49,9 @@
       <axis xyz="0 0 ${sign}" />
       <limit effort="30" velocity="1.0" lower="0" upper="1.57" />
       <dynamics damping="${damping}" friction="0.0" />
+      <xacro:if value="${useMimicTag}">
+        <mimic joint="${ns}_synergy_joint" multiplier="${abd_R}" />
+      </xacro:if>
     </joint>
 
     <link name="${ns}_${type}_knuckle_link">
@@ -103,6 +106,9 @@
       <axis xyz="0 0 1" />
       <limit effort="30" velocity="1.0" lower="-0.785398" upper="1.57" />
       <dynamics damping="${damping}" friction="0.0" />
+      <xacro:if value="${useMimicTag}">
+        <mimic joint="${ns}_synergy_joint" multiplier="${inner_R}" />
+      </xacro:if>
     </joint>
 
     <link name="${ns}_${type}_proximal_link">
@@ -147,6 +153,9 @@
       <limit effort="30" velocity="1.0" lower="-0.785398" upper="1.57" />
       <axis xyz="0 0 1" />
       <dynamics damping="${damping}" friction="0.0" />
+      <xacro:if value="${useMimicTag}">
+        <mimic joint="${ns}_synergy_joint" multiplier="${outer_R}" />
+      </xacro:if>
     </joint>
 
     <link name="${ns}_${type}_distal_link">
