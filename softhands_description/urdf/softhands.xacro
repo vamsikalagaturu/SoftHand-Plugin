@@ -44,7 +44,7 @@
   <xacro:include filename="$(find softhands_description)/urdf/v2.0/sh_v2.xacro"/>
   <xacro:include filename="$(find softhands_description)/urdf/v2.0_simple/sh_v2_simple.xacro"/>
 
-  <xacro:macro name="softhands" params="type version parent position orientation operation_mode translation useMimicTag fixed_hands:='false'">
+  <xacro:macro name="softhands" params="type version parent position orientation operation_mode translation useMimicTag:='false' fixed_hands:='false'">
 
     # Softhand VERSION 1.0
     <xacro:if value="${version == 'v1.0'}">
