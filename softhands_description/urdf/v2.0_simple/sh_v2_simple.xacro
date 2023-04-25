@@ -114,21 +114,6 @@
     <link name="${type}_hand_v2s_palm_base">
     </link>
 
-	<!-- synergy joint -->
-
-	<joint name="${type}_hand_v2s_synergy_joint" type="revolute">
-		<parent link="${type}_hand_v2s_palm_base"/>
-		<child link="${type}_hand_v2s_synergy_link"/>
-		<axis xyz="0 0 1"/>
-		<limit lower="${synergy_lb}" upper="${synergy_ub}" effort="${max_synergy_effort}" velocity="${max_synergy_velocity}"/>
-		<dynamics damping="${synergy_damping}" friction="${synergy_friction}"/>
-	</joint>
-
-	<link name="${type}_hand_v2s_synergy_link">
-		<inertial>
-			<xacro:insert_block name="negligible_inertia"/>
-		</inertial>
-	</link>
 
     # RIGHT HAND 
     <xacro:if value="${type == 'right'}">
@@ -139,25 +124,25 @@
 	      <parent link="${type}_hand_v2s_palm_base" />
 	      <child link="${type}_hand_v2s_palm_link" />
       </joint>
-      <link name="${type}_hand_v2s_palm_link">
-	<inertial>
-	  <origin xyz="-0.004568758 -0.006808116 0.027653328"/>
-	  <mass value="0.266"/>
-	  <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
-	</inertial>
-	<visual>
-	  <geometry>
-	    <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_palm_ng.stl" scale="0.001 0.001 0.001"/> 
-	  </geometry>
-	  <material name="qbmove/default"/>
-	</visual>
-	<collision>
-	  <geometry>
-	    <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_palm_ng.stl" scale="0.001 0.001 0.001"/> 
-	  </geometry>
-	</collision>       
-      </link>
-      <gazebo reference="${type}_hand_v2s_palm_link">
+    <link name="${type}_hand_v2s_palm_link">
+		<inertial>
+		<origin xyz="-0.004568758 -0.006808116 0.027653328"/>
+		<mass value="0.266"/>
+		<inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+		</inertial>
+		<visual>
+		<geometry>
+			<mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_palm_ng.stl" scale="0.001 0.001 0.001"/> 
+		</geometry>
+		<material name="qbmove/default"/>
+		</visual>
+		<collision>
+		<geometry>
+			<mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_palm_ng.stl" scale="0.001 0.001 0.001"/> 
+		</geometry>
+		</collision>       
+    </link>
+    <gazebo reference="${type}_hand_v2s_palm_link">
       <material>Gazebo/Grey</material>
       <selfCollide>true</selfCollide>
     </gazebo>
@@ -346,6 +331,22 @@
       </xacro:finger_v2_simple>
 
     </xacro:if>
+
+	<!-- synergy joint -->
+
+	<joint name="${type}_hand_v2s_synergy_joint" type="revolute">
+		<parent link="${type}_hand_v2s_palm_link"/>
+		<child link="${type}_hand_v2s_synergy_link"/>
+		<axis xyz="0 0 1"/>
+		<limit lower="${synergy_lb}" upper="${synergy_ub}" effort="${max_synergy_effort}" velocity="${max_synergy_velocity}"/>
+		<dynamics damping="${synergy_damping}" friction="${synergy_friction}"/>
+	</joint>
+
+	<link name="${type}_hand_v2s_synergy_link">
+		<inertial>
+			<xacro:insert_block name="negligible_inertia"/>
+		</inertial>
+	</link>
 
 	  # Gazebo NEW custom synergy-plugin
 	  <gazebo>
