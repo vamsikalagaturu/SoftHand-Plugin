@@ -221,7 +221,7 @@
 	<xacro:if value="${useMimicTag}">
 	  <xacro:mimic_joint_plugin_gazebo name_prefix="${ns}_${type}_proximal_joint" 
 	  	parent_joint="${ns}_synergy_joint" mimic_joint="${ns}_${type}_proximal_joint" 
-		has_pid="true" multiplier="${abd_R}" />
+		has_pid="true" multiplier="${inner_R}" />
 	</xacro:if>
 
       
@@ -276,7 +276,7 @@
 	<xacro:if value="${useMimicTag}">
 	  <xacro:mimic_joint_plugin_gazebo name_prefix="${ns}_${type}_middle_joint" 
 	  	parent_joint="${ns}_synergy_joint" mimic_joint="${ns}_${type}_middle_joint" 
-		has_pid="true" multiplier="${abd_R}" />
+		has_pid="true" multiplier="${middle_R}" />
 	</xacro:if>
     
     <link name="${ns}_${type}_middle_link">
@@ -330,7 +330,7 @@
 	<xacro:if value="${useMimicTag}">
 	  <xacro:mimic_joint_plugin_gazebo name_prefix="${ns}_${type}_distal_joint" 
 	  	parent_joint="${ns}_synergy_joint" mimic_joint="${ns}_${type}_distal_joint" 
-		has_pid="true" multiplier="${abd_R}" />
+		has_pid="true" multiplier="${outer_R}" />
 	</xacro:if>
     
     <link name="${ns}_${type}_distal_link">
