@@ -332,6 +332,21 @@
 
     </xacro:if>
 
+	<joint name="${type}_hand_v2s_grasp_joint" type="fixed">
+		<origin xyz="0 0 0.07" rpy="0 0 0"/>
+		<parent link="${type}_hand_v2s_palm_base"/>
+		<child link="${type}_hand_v2s_grasp_link"/>
+	</joint>
+	<link name="${type}_hand_v2s_grasp_link">
+		<inertial>
+			<xacro:insert_block name="negligible_inertia"/>
+		</inertial>
+	</link>
+	<gazebo reference="${type}_hand_v2s_grasp_link">
+		<material>Gazebo/Grey</material>
+		<selfCollide>true</selfCollide>
+	</gazebo>
+
 	<!-- synergy joint -->
 
 	<joint name="${type}_hand_v2s_synergy_joint" type="revolute">
