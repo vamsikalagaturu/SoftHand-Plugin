@@ -156,9 +156,9 @@
 	      orientation="-1.5707963 -0.7 -1.0471972"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="${thumb_abd_R *(thumb_abd_ub - thumb_abd_lb)*pi/180}" 
-		  inner_R="${thumb_inner_R *(inner_ub - inner_lb)*pi/180}" 
-		  outer_R="${thumb_outer_R *(outer_ub - outer_lb)*pi/180}"
+		  abd_R="1.0" 
+		  inner_R="1.0" 
+		  outer_R="1.0"
 	      translation="${translation}"> <!-- added offset on orientation -->
       </xacro:thumb_v2_simple>
 
@@ -170,10 +170,10 @@
 	      orientation="0 0 -0.1745327"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="${index_abd_R}" 
-		  inner_R="${index_inner_R *(inner_ub - inner_lb)*pi/180}" 
-		  middle_R="${index_middle_R *(middle_ub - middle_lb)*pi/180}" 
-		  outer_R="${index_outer_R *(outer_ub - outer_lb)*pi/180}"
+		  abd_R="1.0" 
+		  inner_R="1.0" 
+		  middle_R="1.0" 
+		  outer_R="1.0"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 
@@ -185,10 +185,10 @@
 	      orientation="0.0 0.0 0.0"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="${middle_abd_R}"
-		  inner_R="${middle_inner_R *(inner_ub - inner_lb)*pi/180}" 
-		  middle_R="${middle_middle_R *(middle_ub - middle_lb)*pi/180}" 
-		  outer_R="${middle_outer_R *(outer_ub - outer_lb)*pi/180}"
+		  abd_R="1.0"
+		  inner_R="1.0" 
+		  middle_R="1.0" 
+		  outer_R="1.0"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 
@@ -200,10 +200,10 @@
 	      orientation="0 0 0.0872664"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="${ring_abd_R}" 
-		  inner_R="${ring_inner_R *(inner_ub - inner_lb)*pi/180}" 
-		  middle_R="${ring_middle_R *(middle_ub - middle_lb)*pi/180}" 
-		  outer_R="${ring_outer_R *(outer_ub - outer_lb)*pi/180}"
+		  abd_R="1.0" 
+		  inner_R="1.0" 
+		  middle_R="1.0" 
+		  outer_R="1.0"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 	      
@@ -215,10 +215,10 @@
 	      orientation="0 0 0.2617993"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="${little_abd_R}" 
-		  inner_R="${little_inner_R *(inner_ub - inner_lb)*pi/180}" 
-		  middle_R="${little_middle_R *(middle_ub - middle_lb)*pi/180}" 
-		  outer_R="${little_outer_R *(outer_ub - outer_lb)*pi/180}"
+		  abd_R="1.0" 
+		  inner_R="1.0" 
+		  middle_R="1.0" 
+		  outer_R="1.0"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 
@@ -264,9 +264,9 @@
 	      orientation="1.5707963 0 1.0471971"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="${thumb_abd_R *(thumb_abd_ub - thumb_abd_lb)*pi/180}" 
-		  inner_R="${thumb_inner_R *(inner_ub - inner_lb)*pi/180}" 
-		  outer_R="${thumb_outer_R *(outer_ub - outer_lb)*pi/180}"
+		  abd_R="1.0" 
+		  inner_R="1.0" 
+		  outer_R="1.0"
 	      translation="${translation}">
       </xacro:thumb_v2_simple>
 
@@ -278,10 +278,10 @@
 	      orientation="0 0 0.1745327"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="${index_abd_R}" 
-		  inner_R="${index_inner_R *(inner_ub - inner_lb)*pi/180}" 
-		  middle_R="${index_middle_R *(middle_ub - middle_lb)*pi/180}" 
-		  outer_R="${index_outer_R *(outer_ub - outer_lb)*pi/180}"
+		  abd_R="1.0" 
+		  inner_R="1.0" 
+		  middle_R="1.0" 
+		  outer_R="1.0"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 
@@ -293,10 +293,10 @@
 	      orientation="0.0 0.0 0.0"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="${middle_abd_R}"
-		  inner_R="${middle_inner_R *(inner_ub - inner_lb)*pi/180}" 
-		  middle_R="${middle_middle_R *(middle_ub - middle_lb)*pi/180}" 
-		  outer_R="${middle_outer_R *(outer_ub - outer_lb)*pi/180}"
+		  abd_R="1.0"
+		  inner_R="1.0" 
+		  middle_R="1.0" 
+		  outer_R="1.0"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 
@@ -308,10 +308,10 @@
 	      orientation="0 0 -0.0872667 "
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="${ring_abd_R}" 
-		  inner_R="${ring_inner_R *(inner_ub - inner_lb)*pi/180}" 
-		  middle_R="${ring_middle_R *(middle_ub - middle_lb)*pi/180}" 
-		  outer_R="${ring_outer_R *(outer_ub - outer_lb)*pi/180}"
+		  abd_R="1.0" 
+		  inner_R="1.0" 
+		  middle_R="1.0" 
+		  outer_R="1.0"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 	      
@@ -323,10 +323,10 @@
 	      orientation="0 0 -0.2617993"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="${little_abd_R}" 
-		  inner_R="${little_inner_R *(inner_ub - inner_lb)*pi/180}" 
-		  middle_R="${little_middle_R *(middle_ub - middle_lb)*pi/180}" 
-		  outer_R="${little_outer_R *(outer_ub - outer_lb)*pi/180}"
+		  abd_R="1.0" 
+		  inner_R="1.0" 
+		  middle_R="1.0" 
+		  outer_R="1.0"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 
