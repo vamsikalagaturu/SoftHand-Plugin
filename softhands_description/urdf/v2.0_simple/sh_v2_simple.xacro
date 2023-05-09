@@ -44,6 +44,11 @@
 	<!-- from pisa-iit soft hand description -->
 	<!-- pkg: pisa-iit-soft-hand/soft_hand_description/model/soft_hand.urdf.xacro -->
 
+	<!-- define material -->
+	<material name="qbmove/default">
+		<color rgba="0.5 0.5 0.5 1"/>
+	</material>
+
 	<!-- joint properties -->
 	<xacro:property name="abd_lb" value="-30" />
 	<xacro:property name="abd_ub" value="30" />
@@ -156,9 +161,9 @@
 	      orientation="-1.5707963 -0.7 -1.0471972"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="1.0" 
-		  inner_R="1.0" 
-		  outer_R="1.0"
+		  abd_R="1.2" 
+		  inner_R="1.2" 
+		  outer_R="1.2"
 	      translation="${translation}"> <!-- added offset on orientation -->
       </xacro:thumb_v2_simple>
 
@@ -170,10 +175,10 @@
 	      orientation="0 0 -0.1745327"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="1.0" 
-		  inner_R="1.0" 
-		  middle_R="1.0" 
-		  outer_R="1.0"
+		  abd_R="1.2" 
+		  inner_R="1.2" 
+		  middle_R="1.2" 
+		  outer_R="1.2"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 
@@ -185,10 +190,10 @@
 	      orientation="0.0 0.0 0.0"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="1.0"
-		  inner_R="1.0" 
-		  middle_R="1.0" 
-		  outer_R="1.0"
+		  abd_R="1.2"
+		  inner_R="1.2" 
+		  middle_R="1.2" 
+		  outer_R="1.2"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 
@@ -200,10 +205,10 @@
 	      orientation="0 0 0.0872664"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="1.0" 
-		  inner_R="1.0" 
-		  middle_R="1.0" 
-		  outer_R="1.0"
+		  abd_R="1.2" 
+		  inner_R="1.2" 
+		  middle_R="1.2" 
+		  outer_R="1.2"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 	      
@@ -215,10 +220,10 @@
 	      orientation="0 0 0.2617993"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="1.0" 
-		  inner_R="1.0" 
-		  middle_R="1.0" 
-		  outer_R="1.0"
+		  abd_R="1.2" 
+		  inner_R="1.2" 
+		  middle_R="1.2" 
+		  outer_R="1.2"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 
@@ -264,9 +269,9 @@
 	      orientation="1.5707963 0 1.0471971"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="1.0" 
-		  inner_R="1.0" 
-		  outer_R="1.0"
+		  abd_R="1.2" 
+		  inner_R="1.2" 
+		  outer_R="1.2"
 	      translation="${translation}">
       </xacro:thumb_v2_simple>
 
@@ -278,10 +283,10 @@
 	      orientation="0 0 0.1745327"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="1.0" 
-		  inner_R="1.0" 
-		  middle_R="1.0" 
-		  outer_R="1.0"
+		  abd_R="1.2" 
+		  inner_R="1.2" 
+		  middle_R="1.2" 
+		  outer_R="1.2"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 
@@ -293,10 +298,10 @@
 	      orientation="0.0 0.0 0.0"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="1.0"
-		  inner_R="1.0" 
-		  middle_R="1.0" 
-		  outer_R="1.0"
+		  abd_R="1.2"
+		  inner_R="1.2" 
+		  middle_R="1.2" 
+		  outer_R="1.2"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 
@@ -308,10 +313,10 @@
 	      orientation="0 0 -0.0872667 "
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="1.0" 
-		  inner_R="1.0" 
-		  middle_R="1.0" 
-		  outer_R="1.0"
+		  abd_R="1.2" 
+		  inner_R="1.2" 
+		  middle_R="1.2" 
+		  outer_R="1.2"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 	      
@@ -323,10 +328,10 @@
 	      orientation="0 0 -0.2617993"
 	      damping="0.05" 
 		  useMimicTag="${useMimicTag}"
-		  abd_R="1.0" 
-		  inner_R="1.0" 
-		  middle_R="1.0" 
-		  outer_R="1.0"
+		  abd_R="1.2" 
+		  inner_R="1.2" 
+		  middle_R="1.2" 
+		  outer_R="1.2"
 	      translation="${translation}">
       </xacro:finger_v2_simple>
 
@@ -362,6 +367,33 @@
 			<xacro:insert_block name="negligible_inertia"/>
 		</inertial>
 	</link>
+
+	<gazebo reference="${type}_hand_v2s_synergy_link">
+		<material>Gazebo/Grey</material>
+		<collision name="${type}_hand_v2s_synergy_collision">
+			<surface>
+				<friction>
+					<torsional>
+						<coefficient>10.0</coefficient>
+						<use_patch_radius>true</use_patch_radius>
+						<patch_radius>0.05</patch_radius>
+					</torsional>
+				</friction>
+				<contact>
+					<poissons_ratio>0.5</poissons_ratio>
+					<elastic_modulus>1e8</elastic_modulus>
+				</contact>
+			</surface>
+		</collision>
+		<mu1>10</mu1>
+		<mu2>10</mu2>
+		<maxVel>1</maxVel>
+		<kp>1000000.0</kp>
+		<kd>100.0</kd> 
+		<fdir1>0 0 1</fdir1>
+		<minDepth>0.0</minDepth>
+		<maxContacts>100</maxContacts>
+	</gazebo>
 
 	  # Gazebo NEW custom synergy-plugin
 	  <gazebo>
