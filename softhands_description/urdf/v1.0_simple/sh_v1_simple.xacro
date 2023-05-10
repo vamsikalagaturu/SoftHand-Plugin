@@ -33,26 +33,62 @@
  * \file      sh_v1_simple.xacro
  *
  * \author       _Centro di Ricerca "E.Piaggio"_
- * \author       _Istituto Italiano di Tecnologia, Soft Robotics for Human Cooperation and Rehabilitation Lab_
+ * \author       _Istituto Italiano di Tecnologia, Soft Robotics for Human Cooperation and Rehabilitation
+Lab_
  *
 -->
 
-<robot name="softhand_v1.0" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="softhand_v1.0"
+	xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 	<xacro:include filename="$(find softhands_description)/urdf/v1.0_simple/finger.xacro" />
 	<xacro:include filename="$(find softhands_description)/urdf/v1.0_simple/thumb.xacro" />
 
-	<xacro:macro name="sh_v1_simple" params="type parent position orientation operation_mode fixed_hand:='false'">
-		# Softhand Base
+	<!-- define gazebo grey material -->
+	<material name="grey">
+		<color rgba="0.5 0.5 0.5 1" />
+	</material>
+
+	<!-- not so negligible, otherwise simulation fails -->
+	<xacro:property name="negligible_mass" value="${10*gr_to_Kg}" />
+	<xacro:property name="negligible_inertia">
+		<origin xyz="0 0 0" />
+		<mass value="${negligible_mass}" />
+		<inertia ixx="${negligible_mass * 10 * mm2_to_m2}" ixy="0.0" ixz="0.0"
+			iyy="${negligible_mass * 10 * mm2_to_m2}" iyz="0.0"
+			izz="${negligible_mass * 10 * mm2_to_m2}" />
+	</xacro:property>
+
+	<!-- synergy joint properties -->
+	<xacro:property name="synergy_lb" value="0.0" />
+	<xacro:property name="synergy_ub" value="1.0" />
+	<xacro:property name="max_synergy_velocity" value="100000" />
+	<xacro:property name="max_synergy_effort" value="100" />
+	<xacro:property name="synergy_damping" value="0.0" />
+	<xacro:property name="synergy_friction" value="0.0" />
+
+	<!-- multipliers -->
+	<xacro:property name="thumb_abd_R" value="1.2" />
+	<xacro:property name="common_abd_R" value="1.2" />
+	<xacro:property name="common_inner_R" value="1.2" />
+	<xacro:property name="common_middle_R" value="1.2" />
+	<xacro:property name="common_outer_R" value="1.2" />
+
+	<xacro:macro name="sh_v1_simple"
+		params="type parent position orientation operation_mode fixed_hand:='false' useMimicTag:='false'">
+
+		<!-- # Softhand Base -->
 		<joint name="${type}_hand_base_joint" type="fixed">
 			<origin xyz="${position}" rpy="${orientation}" />
 			<parent link="${parent}" />
 			<child link="${type}_hand_v1s_palm_base" />
 		</joint>
 		<link name="${type}_hand_v1s_palm_base"></link>
-		# RIGHT HAND
+
+		<!-- # RIGHT HAND -->
 		<xacro:if value="${type == 'right'}">
-			# Palm
+
+			<!-- # Palm -->
 			<joint name="${type}_hand_v1s_palm_joint" type="fixed">
 				<origin xyz="0.002 0.00695 0.0535" rpy="0 0 0" />
 				<parent link="${type}_hand_v1s_palm_base" />
@@ -66,42 +102,117 @@
 				</inertial>
 				<visual>
 					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/palm_right_m.stl" />
+						<mesh
+							filename="package://softhands_description/meshes/softhands/v1.0/right/palm_right_m.stl" />
 					</geometry>
+					<material name="grey" />
 				</visual>
 				<collision>
 					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/palm_right_m.stl" />
+						<mesh
+							filename="package://softhands_description/meshes/softhands/v1.0/right/palm_right_m.stl" />
 					</geometry>
 				</collision>
 				<visual>
 					<origin xyz="-0.002 -0.00695 -0.0535" rpy="0 0 0" />
 					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/softhand_base_right_m.stl" />
+						<mesh
+							filename="package://softhands_description/meshes/softhands/v1.0/right/softhand_base_right_m.stl" />
 					</geometry>
 				</visual>
 				<collision>
 					<origin xyz="-0.002 -0.00695 -0.0535" rpy="0 0 0" />
 					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/softhand_base_right_m.stl" />
+						<mesh
+							filename="package://softhands_description/meshes/softhands/v1.0/right/softhand_base_right_m.stl" />
 					</geometry>
 				</collision>
 			</link>
-			# Thumb finger
-			<xacro:thumb_v1_simple type="thumb" ns="${type}_hand_v1s" sign="1" position="0.00566972 0.0296160 0.0553140" orientation="0.0 -0.38397275793662144 1.5707963267948966" fixed="${fixed_hand}"></xacro:thumb_v1_simple>
-			# Index finger
-			<xacro:finger_v1_simple type="index" ns="${type}_hand_v1s" sign="1" position="-0.0033 0.0195 0.0936994" orientation="1.5707963267948966 -1.4835299330931884 1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
-			# Middle finger
-			<xacro:finger_v1_simple type="middle" ns="${type}_hand_v1s" sign="1" position="-0.003300000 0.0 0.100699" orientation="3.141592 -1.5707963267948966 0.0" fixed="${fixed_hand}"></xacro:finger_v1_simple>
-			# Ring finger
-			<xacro:finger_v1_simple type="ring" ns="${type}_hand_v1s" sign="1" position="-0.0033 -0.0195 0.0936994" orientation="-1.5707963267948966 -1.5184364298870514 -1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
-			# Little finger
-			<xacro:finger_v1_simple type="little" ns="${type}_hand_v1s" sign="1" position="-0.0033 -0.039 0.0836994" orientation="-1.5707963267948966 -1.4835299330931884 -1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
 
+			<gazebo reference="${type}_hand_v1s_palm_link">
+				<material>Gazebo/Grey</material>
+				<selfCollide>true</selfCollide>
+				<mu1>0.2</mu1>
+				<mu2>0.2</mu2>
+				<kp>10000.0</kp>
+				<kd>100.0</kd>
+				<minDepth>0.001</minDepth>
+			</gazebo>
+
+			<!-- # Thumb finger -->
+			<xacro:thumb_v1_simple type="thumb"
+				ns="${type}_hand_v1s"
+				sign="1"
+				position="0.00566972 0.0296160 0.0553140"
+				orientation="0.0 -0.38397275793662144 1.5707963267948966"
+				fixed="${fixed_hand}"
+				useMimicTag="${useMimicTag}"
+				abd_R="${thumb_abd_R}"
+				inner_R="${common_inner_R}"
+				outer_R="${common_outer_R}">
+			</xacro:thumb_v1_simple>
+
+			<!-- # Index finger -->
+			<xacro:finger_v1_simple type="index"
+				ns="${type}_hand_v1s"
+				sign="1"
+				position="-0.0033 0.0195 0.0936994"
+				orientation="1.5707963267948966 -1.4835299330931884 1.5707963267948966"
+				fixed="${fixed_hand}"
+				useMimicTag="${useMimicTag}"
+				abd_R="${common_abd_R}"
+				inner_R="${common_inner_R}"
+				middle_R="${common_middle_R}"
+				outer_R="${common_outer_R}">
+			</xacro:finger_v1_simple>
+
+			<!-- # Middle finger -->
+			<xacro:finger_v1_simple type="middle"
+				ns="${type}_hand_v1s"
+				sign="1"
+				position="-0.003300000 0.0 0.100699"
+				orientation="3.141592 -1.5707963267948966 0.0"
+				fixed="${fixed_hand}"
+				useMimicTag="${useMimicTag}"
+				abd_R="${common_abd_R}"
+				inner_R="${common_inner_R}"
+				middle_R="${common_middle_R}"
+				outer_R="${common_outer_R}">
+			</xacro:finger_v1_simple>
+
+			<!-- # Ring finger -->
+			<xacro:finger_v1_simple type="ring"
+				ns="${type}_hand_v1s"
+				sign="1"
+				position="-0.0033 -0.0195 0.0936994"
+				orientation="-1.5707963267948966 -1.5184364298870514 -1.5707963267948966"
+				fixed="${fixed_hand}"
+				useMimicTag="${useMimicTag}"
+				abd_R="${common_abd_R}"
+				inner_R="${common_inner_R}"
+				middle_R="${common_middle_R}"
+				outer_R="${common_outer_R}">
+			</xacro:finger_v1_simple>
+
+			<!-- # Little finger -->
+			<xacro:finger_v1_simple type="little"
+				ns="${type}_hand_v1s"
+				sign="1"
+				position="-0.0033 -0.039 0.0836994"
+				orientation="-1.5707963267948966 -1.4835299330931884 -1.5707963267948966"
+				fixed="${fixed_hand}"
+				useMimicTag="${useMimicTag}"
+				abd_R="${common_abd_R}"
+				inner_R="${common_inner_R}"
+				middle_R="${common_middle_R}"
+				outer_R="${common_outer_R}">
+			</xacro:finger_v1_simple>
 		</xacro:if>
-		# LEFT HAND
+
+		<!-- # LEFT HAND -->
 		<xacro:if value="${type == 'left'}">
-			# Palm
+
+			<!-- # Palm -->
 			<joint name="${type}_hand_v1s_palm_joint" type="fixed">
 				<origin xyz="0.002 0.00695 0.0535" rpy="0 0 0" />
 				<parent link="${type}_hand_v1s_palm_base" />
@@ -115,40 +226,148 @@
 				</inertial>
 				<visual>
 					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/left/palm_left_m.stl" />
+						<mesh
+							filename="package://softhands_description/meshes/softhands/v1.0/left/palm_left_m.stl" />
 					</geometry>
+					<material name="grey" />
 				</visual>
 				<collision>
 					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/left/palm_left_m.stl" />
+						<mesh
+							filename="package://softhands_description/meshes/softhands/v1.0/left/palm_left_m.stl" />
 					</geometry>
 				</collision>
 				<visual>
 					<origin xyz="-0.002 0.00695 -0.0535" rpy="0 0 0" />
 					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/left/softhand_base_left_m.stl" />
+						<mesh
+							filename="package://softhands_description/meshes/softhands/v1.0/left/softhand_base_left_m.stl" />
 					</geometry>
 				</visual>
 				<collision>
 					<origin xyz="-0.002 0.00695 -0.0535" rpy="0 0 0" />
 					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/softhand_base_right_m.stl" />
+						<mesh
+							filename="package://softhands_description/meshes/softhands/v1.0/right/softhand_base_right_m.stl" />
 					</geometry>
 				</collision>
 			</link>
-			# Thumb finger
-			<xacro:thumb_v1_simple type="thumb" ns="${type}_hand_v1s" sign="-1" position="0.005669722 -0.029616 0.055314" orientation="0.0 -0.38397275793662144 -1.5707963267948966" fixed="${fixed_hand}"></xacro:thumb_v1_simple>
-			# Index finger
-			<xacro:finger_v1_simple type="index" ns="${type}_hand_v1s" sign="-1" position="-0.0033 -0.0195 0.0936994" orientation="-1.5707963267948966 -1.4835299330931884 -1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
-			# Middle finger
-			<xacro:finger_v1_simple type="middle" ns="${type}_hand_v1s" sign="-1" position="-0.0033 0.0 0.100699" orientation="3.1415 -1.5707963267948966 0.0" fixed="${fixed_hand}"></xacro:finger_v1_simple>
-			# Ring finger
-			<xacro:finger_v1_simple type="ring" ns="${type}_hand_v1s" sign="-1" position="-0.0033 0.0195 0.0936994" orientation="1.5707963267948966 -1.5184364298870514 1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
-			# Little finger
-			<xacro:finger_v1_simple type="little" ns="${type}_hand_v1s" sign="-1" position="-0.0033 0.039 0.0836994" orientation="1.5707963267948966 -1.4835299330931884 1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
 
+			<gazebo reference="${type}_hand_v1s_palm_link">
+				<material>Gazebo/Grey</material>
+				<selfCollide>true</selfCollide>
+				<mu1>0.2</mu1>
+				<mu2>0.2</mu2>
+				<kp>10000.0</kp>
+				<kd>100.0</kd>
+				<minDepth>0.001</minDepth>
+			</gazebo>
+
+			<!-- # Thumb finger -->
+			<xacro:thumb_v1_simple type="thumb"
+				ns="${type}_hand_v1s"
+				sign="-1"
+				position="0.005669722 -0.029616 0.055314"
+				orientation="0.0 -0.38397275793662144 -1.5707963267948966"
+				fixed="${fixed_hand}"
+				useMimicTag="${useMimicTag}"
+				abd_R="${thumb_abd_R}"
+				inner_R="${common_inner_R}"
+				outer_R="${common_outer_R}">
+			</xacro:thumb_v1_simple>
+
+			<!-- # Index finger -->
+			<xacro:finger_v1_simple type="index" ns="${type}_hand_v1s"
+				sign="-1"
+				position="-0.0033 -0.0195 0.0936994"
+				orientation="-1.5707963267948966 -1.4835299330931884 -1.5707963267948966"
+				fixed="${fixed_hand}"
+				useMimicTag="${useMimicTag}"
+				abd_R="${common_abd_R}"
+				inner_R="${common_inner_R}"
+				middle_R="${common_middle_R}"
+				outer_R="${common_outer_R}">
+			</xacro:finger_v1_simple>
+
+			<!-- # Middle finger  -->
+			<xacro:finger_v1_simple type="middle"
+				ns="${type}_hand_v1s"
+				sign="-1"
+				position="-0.0033 0.0 0.100699"
+				orientation="3.1415 -1.5707963267948966 0.0"
+				fixed="${fixed_hand}"
+				useMimicTag="${useMimicTag}"
+				abd_R="${common_abd_R}"
+				inner_R="${common_inner_R}"
+				middle_R="${common_middle_R}"
+				outer_R="${common_outer_R}">
+			</xacro:finger_v1_simple>
+
+			<!-- # Ring finger  -->
+			<xacro:finger_v1_simple type="ring"
+				ns="${type}_hand_v1s"
+				sign="-1"
+				position="-0.0033 0.0195 0.0936994"
+				orientation="1.5707963267948966 -1.5184364298870514 1.5707963267948966"
+				fixed="${fixed_hand}"
+				useMimicTag="${useMimicTag}"
+				abd_R="${common_abd_R}"
+				inner_R="${common_inner_R}"
+				middle_R="${common_middle_R}"
+				outer_R="${common_outer_R}">
+			</xacro:finger_v1_simple>
+
+			<!-- # Little finger -->
+			<xacro:finger_v1_simple type="little"
+				ns="${type}_hand_v1s"
+				sign="-1"
+				position="-0.0033 0.039 0.0836994"
+				orientation="1.5707963267948966 -1.4835299330931884 1.5707963267948966"
+				fixed="${fixed_hand}"
+				useMimicTag="${useMimicTag}"
+				abd_R="${common_abd_R}"
+				inner_R="${common_inner_R}"
+				middle_R="${common_middle_R}"
+				outer_R="${common_outer_R}">
+			</xacro:finger_v1_simple>
 		</xacro:if>
-		# Gazebo NEW custom synergy-plugin
+
+		<!-- grasp joint -->
+		<joint name="${type}_hand_v1s_grasp_joint" type="fixed">
+			<origin xyz="0.0 0.0 0.07" rpy="0 0 0" />
+			<parent link="${type}_hand_v1s_palm_link" />
+			<child link="${type}_hand_v1s_grasp_link" />
+		</joint>
+		<link name="${type}_hand_v1s_grasp_link">
+			<inertial>
+				<xacro:insert_block name="negligible_inertia" />
+			</inertial>
+		</link>
+
+		<gazebo reference="${type}_hand_v1s_grasp_link">
+			<material>Gazebo/White</material>
+		</gazebo>
+
+		<!-- synergy joint -->
+		<joint name="${type}_hand_v1s_synergy_joint" type="revolute">
+			<parent link="${type}_hand_v1s_palm_link" />
+			<child link="${type}_hand_v1s_synergy_link" />
+			<axis xyz="0 0 1" />
+			<limit lower="${synergy_lb}" upper="${synergy_ub}" effort="${max_synergy_effort}"
+				velocity="${max_synergy_velocity}" />
+			<dynamics damping="${synergy_damping}" friction="${synergy_friction}" />
+		</joint>
+		<link name="${type}_hand_v1s_synergy_link">
+			<inertial>
+				<xacro:insert_block name="negligible_inertia" />
+			</inertial>
+		</link>
+
+		<gazebo reference="${type}_hand_v1s_synergy_link">
+			<material>Gazebo/White</material>
+		</gazebo>
+
+		<!-- # Gazebo NEW custom synergy-plugin -->
 		<gazebo>
 			<plugin name="synergy_plugin" filename="libsofthand_plugin.so">
 				<namespace>${type}_hand_v1s</namespace>

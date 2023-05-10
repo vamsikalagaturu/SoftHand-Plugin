@@ -112,14 +112,8 @@
       <!-- <selfCollide>true</selfCollide> -->
       <kp value="1e4" />
       <kd value="1e2" />
-      <surface>
-        <friction>
-          <ode>
-            <mu>0.133</mu>
-            <mu2>0.133</mu2>
-          </ode>
-        </friction>
-      </surface>
+      <mu1>1000.933</mu1> 
+	    <mu2>1000.933</mu2>
     </gazebo>
 
     <joint name="${ns}_${type}_proximal_joint" type="revolute">
@@ -163,14 +157,8 @@
       <!-- <selfCollide>true</selfCollide> -->
       <kp value="1e4" />
       <kd value="1e2" />
-      <surface>
-        <friction>
-          <ode>
-            <mu>0.133</mu>
-            <mu2>0.133</mu2>
-          </ode>
-        </friction>
-      </surface>
+      <mu1>1000.933</mu1> 
+	    <mu2>1000.933</mu2>
     </gazebo>
 
     <joint name="${ns}_${type}_distal_joint" type="revolute">
@@ -214,14 +202,8 @@
       <selfCollide>true</selfCollide>
       <kp value="1e4" />
       <kd value="1e2" />
-      <surface>
-        <friction>
-          <ode>
-            <mu>0.133</mu>
-            <mu2>0.133</mu2>
-          </ode>
-        </friction>
-      </surface>
+      <mu1>1000.933</mu1> 
+	    <mu2>1000.933</mu2>
     </gazebo>
 
   </xacro:macro>

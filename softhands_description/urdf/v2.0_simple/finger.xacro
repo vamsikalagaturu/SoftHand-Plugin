@@ -33,25 +33,31 @@
  * \file      finger.xacro
  *
  * \author       _Centro di Ricerca "E.Piaggio"_
- * \author       _Istituto Italiano di Tecnologia, Soft Robotics for Human Cooperation and Rehabilitation Lab_
+ * \author       _Istituto Italiano di Tecnologia, Soft Robotics for Human Cooperation and Rehabilitation
+Lab_
  *
 -->
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  
-  <xacro:macro name="finger_v2_simple" params="type ns sign position orientation translation damping useMimicTag abd_R inner_R middle_R outer_R">
 
-	<xacro:macro name="mimic_joint_plugin_gazebo" params="name_prefix parent_joint mimic_joint has_pid:=false multiplier:=1.0 offset:=0 sensitiveness:=0.0 max_effort:=1.0">
+  <xacro:macro name="finger_v2_simple"
+    params="type ns sign position orientation translation damping useMimicTag abd_R inner_R middle_R outer_R">
+
+    <xacro:macro name="mimic_joint_plugin_gazebo"
+      params="name_prefix parent_joint mimic_joint has_pid:=false multiplier:=1.0 offset:=0 sensitiveness:=0.0 max_effort:=1.0">
       <gazebo>
-        <plugin name="${name_prefix}mimic_joint_plugin" filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
+        <plugin name="${name_prefix}mimic_joint_plugin"
+          filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
           <joint>${parent_joint}</joint>
           <mimicJoint>${mimic_joint}</mimicJoint>
-          <xacro:if value="${has_pid}">                     <!-- if set to true, PID parameters from "/gazebo_ros_control/pid_gains/${mimic_joint}" are loaded -->
+          <xacro:if value="${has_pid}">                     <!-- if set to true, PID parameters from
+            "/gazebo_ros_control/pid_gains/${mimic_joint}" are loaded -->
             <hasPID />
           </xacro:if>
           <multiplier>${multiplier}</multiplier>
           <offset>${offset}</offset>
-          <sensitiveness>${sensitiveness}</sensitiveness>   <!-- if absolute difference between setpoint and process value is below this threshold, do nothing; 0.0 = disable [rad] -->
+          <sensitiveness>${sensitiveness}</sensitiveness>   <!-- if absolute difference between
+          setpoint and process value is below this threshold, do nothing; 0.0 = disable [rad] -->
           <maxEffort>${max_effort}</maxEffort>              <!-- only taken into account if has_pid:=true [Nm] -->
           <xacro:unless value="${ns == ''}">
             <robotNamespace>${ns}</robotNamespace>
@@ -62,312 +68,332 @@
 
     <!-- KNUCKLE -->
     <joint name="${ns}_${type}_knuckle_joint" type="revolute">
-      <origin xyz="${position}" rpy="${orientation}"/>
-      <parent link="${ns}_palm_link"/>
-      <child link="${ns}_${type}_knuckle_link"/>
-      <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1"/>
+      <origin xyz="${position}" rpy="${orientation}" />
+      <parent link="${ns}_palm_link" />
+      <child link="${ns}_${type}_knuckle_link" />
+      <limit effort="30" velocity="1.0" lower="-0.1" upper="0.1" />
       <dynamics damping="${damping}" friction="0.0" />
       <axis xyz="0 0 1" />
-	  <xacro:if value="${useMimicTag}">
+      <xacro:if value="${useMimicTag}">
         <mimic joint="${ns}_synergy_joint" multiplier="${abd_R}" />
       </xacro:if>
-    </joint> 
+    </joint>
 
-	<xacro:if value="${useMimicTag}">
-	  <xacro:mimic_joint_plugin_gazebo name_prefix="${ns}_${type}_knuckle_joint" 
-	  	parent_joint="${ns}_synergy_joint" mimic_joint="${ns}_${type}_knuckle_joint" 
-		has_pid="true" multiplier="${abd_R}" />
-	</xacro:if>
-    
-    
+    <xacro:if value="${useMimicTag}">
+      <xacro:mimic_joint_plugin_gazebo name_prefix="${ns}_${type}_knuckle_joint"
+        parent_joint="${ns}_synergy_joint" mimic_joint="${ns}_${type}_knuckle_joint"
+        has_pid="true" multiplier="${abd_R}" />
+    </xacro:if>
+
+
     <link name="${ns}_${type}_knuckle_link">
       <inertial>
-	<origin xyz="0.001285644 0 0.000425011"/>
-	<mass value="0.009"/>
-	<inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        <origin xyz="0.001285644 0 0.000425011" />
+        <mass value="0.009" />
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
       </inertial>
       <xacro:if value="${type == 'index'}">
-	<visual>
-	  <geometry>
-	    <xacro:if value="${ns == 'right_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_r_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	    <xacro:if value="${ns == 'left_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_r_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	  </geometry>
-	  <material name="qbmove/default"/>
-	</visual>
-	<collision>
-	  <geometry>
-	    <xacro:if value="${ns == 'right_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_r_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	    <xacro:if value="${ns == 'left_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_r_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	  </geometry>
-	</collision>
+        <visual>
+          <geometry>
+            <xacro:if value="${ns == 'right_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_r_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+            <xacro:if value="${ns == 'left_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_r_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+          </geometry>
+          <material name="qbmove/default" />
+        </visual>
+        <collision>
+          <geometry>
+            <xacro:if value="${ns == 'right_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_r_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+            <xacro:if value="${ns == 'left_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_r_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+          </geometry>
+        </collision>
       </xacro:if>
       <xacro:if value="${type == 'middle'}">
-	<visual>
-	  <geometry>
-	    <xacro:if value="${ns == 'right_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_m_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	    <xacro:if value="${ns == 'left_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_m_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	  </geometry>
-	  <material name="qbmove/default"/>
-	</visual>
-	<collision>
-	  <geometry>
-	    <xacro:if value="${ns == 'right_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_m_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	    <xacro:if value="${ns == 'left_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_m_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if> 
-	  </geometry>
-	</collision>
+        <visual>
+          <geometry>
+            <xacro:if value="${ns == 'right_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_m_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+            <xacro:if value="${ns == 'left_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_m_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+          </geometry>
+          <material name="qbmove/default" />
+        </visual>
+        <collision>
+          <geometry>
+            <xacro:if value="${ns == 'right_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_m_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+            <xacro:if value="${ns == 'left_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_m_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+          </geometry>
+        </collision>
       </xacro:if>
       <xacro:if value="${type == 'ring'}">
-	<visual>
-	  <geometry>
-	    <xacro:if value="${ns == 'right_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_l_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	    <xacro:if value="${ns == 'left_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_l_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	  </geometry>
-	  <material name="qbmove/default"/>
-	</visual>
-	<collision>
-	  <geometry>
-	    <xacro:if value="${ns == 'right_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_l_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	    <xacro:if value="${ns == 'left_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_l_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	  </geometry>
-	</collision>
+        <visual>
+          <geometry>
+            <xacro:if value="${ns == 'right_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_l_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+            <xacro:if value="${ns == 'left_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_l_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+          </geometry>
+          <material name="qbmove/default" />
+        </visual>
+        <collision>
+          <geometry>
+            <xacro:if value="${ns == 'right_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_l_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+            <xacro:if value="${ns == 'left_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_l_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+          </geometry>
+        </collision>
       </xacro:if>
       <xacro:if value="${type == 'little'}">
-	<visual>
-	  <geometry>
-	    <xacro:if value="${ns == 'right_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_l_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	    <xacro:if value="${ns == 'left_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_l_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	  </geometry>
-	  <material name="qbmove/default"/>
-	</visual>
-	<collision>
-	  <geometry>
-	    <xacro:if value="${ns == 'right_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_l_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	    <xacro:if value="${ns == 'left_hand_v2s'}">
-	      <mesh filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_l_ng.stl" scale="0.001 0.001 0.001"/> 
-	    </xacro:if>
-	  </geometry>
-	</collision>
+        <visual>
+          <geometry>
+            <xacro:if value="${ns == 'right_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_l_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+            <xacro:if value="${ns == 'left_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_l_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+          </geometry>
+          <material name="qbmove/default" />
+        </visual>
+        <collision>
+          <geometry>
+            <xacro:if value="${ns == 'right_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/right/qbh_prossimal_std_l_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+            <xacro:if value="${ns == 'left_hand_v2s'}">
+              <mesh
+                filename="package://softhands_description/meshes/softhands/v2.0/left/qbh_prossimal_std_l_ng.stl"
+                scale="0.001 0.001 0.001" />
+            </xacro:if>
+          </geometry>
+        </collision>
       </xacro:if>
     </link>
-    
+
     <gazebo reference="${ns}_${type}_knuckle_link">
       <material>Gazebo/Grey</material>
       <!-- <selfCollide>true</selfCollide> -->
       <kp value="1e4" />
       <kd value="1e2" />
- 		  <surface>
-		   <friction>
-		    <ode>
-		     <mu>0.133</mu> 
-		     <mu2>0.133</mu2>
-		    </ode>
-		   </friction>
-		  </surface>
+      <mu1>1000.933</mu1>
+      <mu2>1000.933</mu2>
     </gazebo>
-  
+
     <joint name="${ns}_${type}_proximal_joint" type="revolute">
       <xacro:if value="${type == 'index'}">
-	<origin xyz="0.0211 0.0023 ${translation}" rpy="1.5707963 0 0"/>
+        <origin xyz="0.0211 0.0023 ${translation}" rpy="1.5707963 0 0" />
       </xacro:if>
       <xacro:if value="${type == 'middle'}">
-	<origin xyz="0.0211 0.0 ${translation}" rpy="1.5707963 0 0"/>
+        <origin xyz="0.0211 0.0 ${translation}" rpy="1.5707963 0 0" />
       </xacro:if>
       <xacro:if value="${type == 'ring'}">
-	<origin xyz="0.0211 -0.0023 ${translation}" rpy="1.5707963 0 0"/>
+        <origin xyz="0.0211 -0.0023 ${translation}" rpy="1.5707963 0 0" />
       </xacro:if>
       <xacro:if value="${type == 'little'}">
-	<origin xyz="0.0211 -0.0023 ${translation}" rpy="1.5707963 0 0"/>
+        <origin xyz="0.0211 -0.0023 ${translation}" rpy="1.5707963 0 0" />
       </xacro:if>
-      <parent link="${ns}_${type}_knuckle_link"/>
-      <child link="${ns}_${type}_proximal_link"/>
+      <parent link="${ns}_${type}_knuckle_link" />
+      <child link="${ns}_${type}_proximal_link" />
       <limit effort="30" velocity="1.0" lower="-0.785398" upper="1.57" />
       <dynamics damping="${damping}" friction="0.0" />
       <axis xyz="0 0 1" />
-	  <xacro:if value="${useMimicTag}">
+      <xacro:if value="${useMimicTag}">
         <mimic joint="${ns}_synergy_joint" multiplier="${inner_R}" />
       </xacro:if>
     </joint>
 
-	<xacro:if value="${useMimicTag}">
-	  <xacro:mimic_joint_plugin_gazebo name_prefix="${ns}_${type}_proximal_joint" 
-	  	parent_joint="${ns}_synergy_joint" mimic_joint="${ns}_${type}_proximal_joint" 
-		has_pid="true" multiplier="${inner_R}" />
-	</xacro:if>
+    <xacro:if value="${useMimicTag}">
+      <xacro:mimic_joint_plugin_gazebo name_prefix="${ns}_${type}_proximal_joint"
+        parent_joint="${ns}_synergy_joint" mimic_joint="${ns}_${type}_proximal_joint"
+        has_pid="true" multiplier="${inner_R}" />
+    </xacro:if>
 
-      
-     <link name="${ns}_${type}_proximal_link">
+
+    <link name="${ns}_${type}_proximal_link">
       <inertial>
-        <origin xyz="0.011574337 -${translation} 0"/>
-        <mass value="0.005"/>
-        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        <origin xyz="0.011574337 -${translation} 0" />
+        <mass value="0.005" />
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
       </inertial>
       <visual>
-	<geometry>
-	  <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/phalanx_std_ng.stl" scale="0.001 0.001 0.001"/> 
-	</geometry>
-	<material name="qbmove/default"/>
-	<origin xyz="0.0065 -${translation} 0" rpy="0 0 0"/>
-      </visual>		
+        <geometry>
+          <mesh
+            filename="package://softhands_description/meshes/softhands/v2.0/right/phalanx_std_ng.stl"
+            scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="qbmove/default" />
+        <origin xyz="0.0065 -${translation} 0" rpy="0 0 0" />
+      </visual>
       <collision>
         <geometry>
-          <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/phalanx_std_ng_collision.stl" scale="0.001 0.001 0.001"/> 
+          <mesh
+            filename="package://softhands_description/meshes/softhands/v2.0/right/phalanx_std_ng_collision.stl"
+            scale="0.001 0.001 0.001" />
         </geometry>
-        <origin xyz="0.0065 -${translation} 0" rpy="0 0 0"/>
-      </collision>      
+        <origin xyz="0.0065 -${translation} 0" rpy="0 0 0" />
+      </collision>
     </link>
     <gazebo reference="${ns}_${type}_proximal_link">
       <material>Gazebo/Grey</material>
       <!-- <selfCollide>true</selfCollide> -->
       <kp value="1e4" />
       <kd value="1e2" />
-		  <surface>
-		   <friction>
-		    <ode>
-		     <mu>0.133</mu> 
-		     <mu2>0.133</mu2>
-		    </ode>
-		   </friction>
-		  </surface>
+      <mu1>1000.933</mu1>
+      <mu2>1000.933</mu2>
     </gazebo>
-  
-    
+
+
     <joint name="${ns}_${type}_middle_joint" type="revolute">
-      <origin xyz="0.022 0 0" rpy="0 0 0"/>
-      <parent link="${ns}_${type}_proximal_link"/>
-      <child link="${ns}_${type}_middle_link"/>
+      <origin xyz="0.022 0 0" rpy="0 0 0" />
+      <parent link="${ns}_${type}_proximal_link" />
+      <child link="${ns}_${type}_middle_link" />
       <limit effort="30" velocity="1.0" lower="-0.785398" upper="1.57" />
       <dynamics damping="${damping}" friction="0.0" />
       <axis xyz="0 0 1" />
-	  <xacro:if value="${useMimicTag}">
+      <xacro:if value="${useMimicTag}">
         <mimic joint="${ns}_synergy_joint" multiplier="${middle_R}" />
       </xacro:if>
     </joint>
 
-	<xacro:if value="${useMimicTag}">
-	  <xacro:mimic_joint_plugin_gazebo name_prefix="${ns}_${type}_middle_joint" 
-	  	parent_joint="${ns}_synergy_joint" mimic_joint="${ns}_${type}_middle_joint" 
-		has_pid="true" multiplier="${middle_R}" />
-	</xacro:if>
-    
+    <xacro:if value="${useMimicTag}">
+      <xacro:mimic_joint_plugin_gazebo name_prefix="${ns}_${type}_middle_joint"
+        parent_joint="${ns}_synergy_joint" mimic_joint="${ns}_${type}_middle_joint"
+        has_pid="true" multiplier="${middle_R}" />
+    </xacro:if>
+
     <link name="${ns}_${type}_middle_link">
       <inertial>
-        <origin xyz="0.011574337 -${translation} 0"/>
-        <mass value="0.005"/>
-        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        <origin xyz="0.011574337 -${translation} 0" />
+        <mass value="0.005" />
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
       </inertial>
       <visual>
-	<geometry>
-	  <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/phalanx_std_ng.stl" scale="0.001 0.001 0.001"/> 
-	</geometry>
-	<material name="qbmove/default"/>
-	<origin xyz="0.0065 -${translation} 0" rpy="0 0 0"/>
-      </visual>		
+        <geometry>
+          <mesh
+            filename="package://softhands_description/meshes/softhands/v2.0/right/phalanx_std_ng.stl"
+            scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="qbmove/default" />
+        <origin xyz="0.0065 -${translation} 0" rpy="0 0 0" />
+      </visual>
       <collision>
         <geometry>
-         <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/phalanx_std_ng_collision.stl" scale="0.001 0.001 0.001"/> 
+          <mesh
+            filename="package://softhands_description/meshes/softhands/v2.0/right/phalanx_std_ng_collision.stl"
+            scale="0.001 0.001 0.001" />
         </geometry>
-        <origin xyz="0.0065 -${translation} 0" rpy="0 0 0"/>
-      </collision>        
+        <origin xyz="0.0065 -${translation} 0" rpy="0 0 0" />
+      </collision>
     </link>
     <gazebo reference="${ns}_${type}_middle_link">
       <material>Gazebo/Grey</material>
       <!-- <selfCollide>true</selfCollide> -->
       <kp value="1e4" />
       <kd value="1e2" />
-		  <surface>
-		   <friction>
-		    <ode>
-		     <mu>0.133</mu> 
-		     <mu2>0.133</mu2>
-		    </ode>
-		   </friction>
-		  </surface>
+      <mu1>1000.933</mu1>
+      <mu2>1000.933</mu2>
     </gazebo>
-  
-    
+
+
     <joint name="${ns}_${type}_distal_joint" type="revolute">
-      <origin xyz="0.022 0 0" rpy="0 0 0"/>
-      <parent link="${ns}_${type}_middle_link"/>
-      <child link="${ns}_${type}_distal_link"/>
+      <origin xyz="0.022 0 0" rpy="0 0 0" />
+      <parent link="${ns}_${type}_middle_link" />
+      <child link="${ns}_${type}_distal_link" />
       <limit effort="30" velocity="1.0" lower="-0.785398" upper="1.57" />
       <dynamics damping="${damping}" friction="0.0" />
       <axis xyz="0 0 1" />
-	  <xacro:if value="${useMimicTag}">
+      <xacro:if value="${useMimicTag}">
         <mimic joint="${ns}_synergy_joint" multiplier="${outer_R}" />
       </xacro:if>
     </joint>
 
-	<xacro:if value="${useMimicTag}">
-	  <xacro:mimic_joint_plugin_gazebo name_prefix="${ns}_${type}_distal_joint" 
-	  	parent_joint="${ns}_synergy_joint" mimic_joint="${ns}_${type}_distal_joint" 
-		has_pid="true" multiplier="${outer_R}" />
-	</xacro:if>
-    
+    <xacro:if value="${useMimicTag}">
+      <xacro:mimic_joint_plugin_gazebo name_prefix="${ns}_${type}_distal_joint"
+        parent_joint="${ns}_synergy_joint" mimic_joint="${ns}_${type}_distal_joint"
+        has_pid="true" multiplier="${outer_R}" />
+    </xacro:if>
+
     <link name="${ns}_${type}_distal_link">
       <inertial>
-        <origin xyz="0.011574337 -${translation} 0"/>
-        <mass value="0.005"/>
-        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+        <origin xyz="0.011574337 -${translation} 0" />
+        <mass value="0.005" />
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
       </inertial>
       <visual>
-	<geometry>
-	  <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qb_distal_ng.stl" scale="0.001 0.001 0.001"/> 
-	</geometry>
-	<material name="qbmove/default"/>
-	<origin xyz="0.0065 -${translation} 0" rpy="0 0 0"/>
-      </visual>		
+        <geometry>
+          <mesh
+            filename="package://softhands_description/meshes/softhands/v2.0/right/qb_distal_ng.stl"
+            scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="qbmove/default" />
+        <origin xyz="0.0065 -${translation} 0" rpy="0 0 0" />
+      </visual>
       <collision>
         <geometry>
-          <mesh filename="package://softhands_description/meshes/softhands/v2.0/right/qb_distal_ng.stl" scale="0.001 0.001 0.001"/> 
+          <mesh
+            filename="package://softhands_description/meshes/softhands/v2.0/right/qb_distal_ng.stl"
+            scale="0.001 0.001 0.001" />
         </geometry>
-        <origin xyz="0.0065 0 0" rpy="0 -${translation} 0"/>
-      </collision>      
+        <origin xyz="0.0065 0 0" rpy="0 -${translation} 0" />
+      </collision>
     </link>
     <gazebo reference="${ns}_${type}_distal_link">
       <material>Gazebo/Grey</material>
       <selfCollide>true</selfCollide>
       <kp value="1e4" />
       <kd value="1e2" />
-		  <surface>
-		   <friction>
-		    <ode>
-		     <mu>0.133</mu> 
-		     <mu2>0.133</mu2>
-		    </ode>
-		   </friction>
-		  </surface>
+      <mu1>1000.933</mu1>
+      <mu2>1000.933</mu2>
     </gazebo>
-    
+
   </xacro:macro>
 
 </robot>
