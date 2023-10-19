@@ -98,6 +98,15 @@
 			# Little finger
 			<xacro:finger_v1_simple type="little" ns="${type}_hand_v1s" sign="1" position="-0.0033 -0.039 0.0836994" orientation="-1.5707963267948966 -1.4835299330931884 -1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
 
+			<!-- grasp joint -->
+		<joint name="${type}_hand_v1s_grasp_joint" type="fixed">
+			<origin xyz="0.03 0.06 0.10" rpy="0 0 0" />
+			<parent link="${type}_hand_v1s_palm_link" />
+			<child link="${type}_hand_v1s_grasp_link" />
+		</joint>
+		<link name="${type}_hand_v1s_grasp_link">
+		</link>
+
 		</xacro:if>
 		# LEFT HAND
 		<xacro:if value="${type == 'left'}">
@@ -146,7 +155,18 @@
 			<xacro:finger_v1_simple type="ring" ns="${type}_hand_v1s" sign="-1" position="-0.0033 0.0195 0.0936994" orientation="1.5707963267948966 -1.5184364298870514 1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
 			# Little finger
 			<xacro:finger_v1_simple type="little" ns="${type}_hand_v1s" sign="-1" position="-0.0033 0.039 0.0836994" orientation="1.5707963267948966 -1.4835299330931884 1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
+		<!-- grasp joint -->
+		<joint name="${type}_hand_v1s_grasp_joint" type="fixed">
+			<origin xyz="0.03 -0.06 0.10" rpy="0 0 0" />
+			<parent link="${type}_hand_v1s_palm_link" />
+			<child link="${type}_hand_v1s_grasp_link" />
+		</joint>
+		<link name="${type}_hand_v1s_grasp_link">
+		</link>
 
+		<gazebo reference="${type}_hand_v1s_grasp_link">
+			<material>Gazebo/White</material>
+		</gazebo>
 		</xacro:if>
 		# Gazebo NEW custom synergy-plugin
 		<gazebo>
