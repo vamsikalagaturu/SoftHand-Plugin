@@ -42,7 +42,7 @@
 	<xacro:include filename="$(find softhands_description)/urdf/v1.0_simple/finger.xacro" />
 	<xacro:include filename="$(find softhands_description)/urdf/v1.0_simple/thumb.xacro" />
 
-	<xacro:macro name="sh_v1_simple" params="type parent position orientation operation_mode fixed_hand:='false'">
+	<xacro:macro name="sh_v1_simple" params="type parent position orientation operation_mode fixed_hand:='false' useCollisionMesh:='true' ">
 		# Softhand Base
 		<joint name="${type}_hand_base_joint" type="fixed">
 			<origin xyz="${position}" rpy="${orientation}" />
@@ -69,34 +69,37 @@
 						<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/palm_right_m.stl" />
 					</geometry>
 				</visual>
-				<collision>
-					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/palm_right_m.stl" />
-					</geometry>
-				</collision>
-				<visual>
-					<origin xyz="-0.002 -0.00695 -0.0535" rpy="0 0 0" />
-					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/softhand_base_right_m.stl" />
-					</geometry>
-				</visual>
-				<collision>
-					<origin xyz="-0.002 -0.00695 -0.0535" rpy="0 0 0" />
-					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/softhand_base_right_m.stl" />
-					</geometry>
-				</collision>
+				
+				<xacro:if value="${useCollisionMesh}">
+					<collision>
+						<geometry>
+							<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/palm_right_m.stl" />
+						</geometry>
+					</collision>
+					<visual>
+						<origin xyz="-0.002 -0.00695 -0.0535" rpy="0 0 0" />
+						<geometry>
+							<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/softhand_base_right_m.stl" />
+						</geometry>
+					</visual>
+					<collision>
+						<origin xyz="-0.002 -0.00695 -0.0535" rpy="0 0 0" />
+						<geometry>
+							<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/softhand_base_right_m.stl" />
+						</geometry>
+					</collision>
+				</xacro:if>
 			</link>
 			# Thumb finger
-			<xacro:thumb_v1_simple type="thumb" ns="${type}_hand_v1s" sign="1" position="0.00566972 0.0296160 0.0553140" orientation="0.0 -0.38397275793662144 1.5707963267948966" fixed="${fixed_hand}"></xacro:thumb_v1_simple>
+			<xacro:thumb_v1_simple type="thumb" ns="${type}_hand_v1s" sign="1" position="0.00566972 0.0296160 0.0553140" orientation="0.0 -0.38397275793662144 1.5707963267948966" fixed="${fixed_hand}" useCollisionMesh="${useCollisionMesh}"></xacro:thumb_v1_simple>
 			# Index finger
-			<xacro:finger_v1_simple type="index" ns="${type}_hand_v1s" sign="1" position="-0.0033 0.0195 0.0936994" orientation="1.5707963267948966 -1.4835299330931884 1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
+			<xacro:finger_v1_simple type="index" ns="${type}_hand_v1s" sign="1" position="-0.0033 0.0195 0.0936994" orientation="1.5707963267948966 -1.4835299330931884 1.5707963267948966" fixed="${fixed_hand}" useCollisionMesh="${useCollisionMesh}"></xacro:finger_v1_simple>
 			# Middle finger
-			<xacro:finger_v1_simple type="middle" ns="${type}_hand_v1s" sign="1" position="-0.003300000 0.0 0.100699" orientation="3.141592 -1.5707963267948966 0.0" fixed="${fixed_hand}"></xacro:finger_v1_simple>
+			<xacro:finger_v1_simple type="middle" ns="${type}_hand_v1s" sign="1" position="-0.003300000 0.0 0.100699" orientation="3.141592 -1.5707963267948966 0.0" fixed="${fixed_hand}" useCollisionMesh="${useCollisionMesh}"></xacro:finger_v1_simple>
 			# Ring finger
-			<xacro:finger_v1_simple type="ring" ns="${type}_hand_v1s" sign="1" position="-0.0033 -0.0195 0.0936994" orientation="-1.5707963267948966 -1.5184364298870514 -1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
+			<xacro:finger_v1_simple type="ring" ns="${type}_hand_v1s" sign="1" position="-0.0033 -0.0195 0.0936994" orientation="-1.5707963267948966 -1.5184364298870514 -1.5707963267948966" fixed="${fixed_hand}" useCollisionMesh="${useCollisionMesh}"></xacro:finger_v1_simple>
 			# Little finger
-			<xacro:finger_v1_simple type="little" ns="${type}_hand_v1s" sign="1" position="-0.0033 -0.039 0.0836994" orientation="-1.5707963267948966 -1.4835299330931884 -1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
+			<xacro:finger_v1_simple type="little" ns="${type}_hand_v1s" sign="1" position="-0.0033 -0.039 0.0836994" orientation="-1.5707963267948966 -1.4835299330931884 -1.5707963267948966" fixed="${fixed_hand}" useCollisionMesh="${useCollisionMesh}"></xacro:finger_v1_simple>
 
 			<!-- grasp joint -->
 		<joint name="${type}_hand_v1s_grasp_joint" type="fixed">
@@ -127,34 +130,36 @@
 						<mesh filename="package://softhands_description/meshes/softhands/v1.0/left/palm_left_m.stl" />
 					</geometry>
 				</visual>
-				<collision>
-					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/left/palm_left_m.stl" />
-					</geometry>
-				</collision>
-				<visual>
-					<origin xyz="-0.002 0.00695 -0.0535" rpy="0 0 0" />
-					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/left/softhand_base_left_m.stl" />
-					</geometry>
-				</visual>
-				<collision>
-					<origin xyz="-0.002 0.00695 -0.0535" rpy="0 0 0" />
-					<geometry>
-						<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/softhand_base_right_m.stl" />
-					</geometry>
-				</collision>
+				<xacro:if value="${useCollisionMesh}">
+					<collision>
+						<geometry>
+							<mesh filename="package://softhands_description/meshes/softhands/v1.0/left/palm_left_m.stl" />
+						</geometry>
+					</collision>
+					<visual>
+						<origin xyz="-0.002 0.00695 -0.0535" rpy="0 0 0" />
+						<geometry>
+							<mesh filename="package://softhands_description/meshes/softhands/v1.0/left/softhand_base_left_m.stl" />
+						</geometry>
+					</visual>
+					<collision>
+						<origin xyz="-0.002 0.00695 -0.0535" rpy="0 0 0" />
+						<geometry>
+							<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/softhand_base_right_m.stl" />
+						</geometry>
+					</collision>
+				</xacro:if>
 			</link>
 			# Thumb finger
-			<xacro:thumb_v1_simple type="thumb" ns="${type}_hand_v1s" sign="-1" position="0.005669722 -0.029616 0.055314" orientation="0.0 -0.38397275793662144 -1.5707963267948966" fixed="${fixed_hand}"></xacro:thumb_v1_simple>
+			<xacro:thumb_v1_simple type="thumb" ns="${type}_hand_v1s" sign="-1" position="0.005669722 -0.029616 0.055314" orientation="0.0 -0.38397275793662144 -1.5707963267948966" fixed="${fixed_hand}" useCollisionMesh="${useCollisionMesh}"></xacro:thumb_v1_simple>
 			# Index finger
-			<xacro:finger_v1_simple type="index" ns="${type}_hand_v1s" sign="-1" position="-0.0033 -0.0195 0.0936994" orientation="-1.5707963267948966 -1.4835299330931884 -1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
+			<xacro:finger_v1_simple type="index" ns="${type}_hand_v1s" sign="-1" position="-0.0033 -0.0195 0.0936994" orientation="-1.5707963267948966 -1.4835299330931884 -1.5707963267948966" fixed="${fixed_hand}" useCollisionMesh="${useCollisionMesh}"></xacro:finger_v1_simple>
 			# Middle finger
-			<xacro:finger_v1_simple type="middle" ns="${type}_hand_v1s" sign="-1" position="-0.0033 0.0 0.100699" orientation="3.1415 -1.5707963267948966 0.0" fixed="${fixed_hand}"></xacro:finger_v1_simple>
+			<xacro:finger_v1_simple type="middle" ns="${type}_hand_v1s" sign="-1" position="-0.0033 0.0 0.100699" orientation="3.1415 -1.5707963267948966 0.0" fixed="${fixed_hand}" useCollisionMesh="${useCollisionMesh}"></xacro:finger_v1_simple>
 			# Ring finger
-			<xacro:finger_v1_simple type="ring" ns="${type}_hand_v1s" sign="-1" position="-0.0033 0.0195 0.0936994" orientation="1.5707963267948966 -1.5184364298870514 1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
+			<xacro:finger_v1_simple type="ring" ns="${type}_hand_v1s" sign="-1" position="-0.0033 0.0195 0.0936994" orientation="1.5707963267948966 -1.5184364298870514 1.5707963267948966" fixed="${fixed_hand}" useCollisionMesh="${useCollisionMesh}"></xacro:finger_v1_simple>
 			# Little finger
-			<xacro:finger_v1_simple type="little" ns="${type}_hand_v1s" sign="-1" position="-0.0033 0.039 0.0836994" orientation="1.5707963267948966 -1.4835299330931884 1.5707963267948966" fixed="${fixed_hand}"></xacro:finger_v1_simple>
+			<xacro:finger_v1_simple type="little" ns="${type}_hand_v1s" sign="-1" position="-0.0033 0.039 0.0836994" orientation="1.5707963267948966 -1.4835299330931884 1.5707963267948966" fixed="${fixed_hand}" useCollisionMesh="${useCollisionMesh}"></xacro:finger_v1_simple>
 		<!-- grasp joint -->
 		<joint name="${type}_hand_v1s_grasp_joint" type="fixed">
 			<origin xyz="0.03 -0.06 0.10" rpy="0 0 0" />

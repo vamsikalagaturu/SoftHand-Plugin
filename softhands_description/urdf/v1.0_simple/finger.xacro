@@ -39,7 +39,7 @@
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="finger_v1_simple" params="type ns sign position orientation fixed:='false'">
+  <xacro:macro name="finger_v1_simple" params="type ns sign position orientation fixed:='false' useCollisionMesh:='true' ">
 
   <xacro:if value="${fixed == False}">
     <xacro:property name="joint_type" value="revolute"/>
@@ -70,11 +70,13 @@
           <mesh filename="package://softhands_description/meshes/softhands/v1.0/common/knuckle_m.stl"/>
         </geometry>
       </visual>
+      <xacro:if value="${useCollisionMesh}">
       <collision>
         <geometry>
           <mesh filename="package://softhands_description/meshes/softhands/v1.0/common/knuckle_m.stl"/>
         </geometry>
       </collision>
+      </xacro:if>
     </link>
     <!-- PROXIMAL PHALANGE -->
     <joint name="${ns}_${type}_proximal_joint" type="${joint_type}">
@@ -95,11 +97,13 @@
           <mesh filename="package://softhands_description/meshes/softhands/v1.0/common/phalanx_m.stl"/>
         </geometry>
       </visual>
+      <xacro:if value="${useCollisionMesh}">
       <collision>
         <geometry>
           <mesh filename="package://softhands_description/meshes/softhands/v1.0/common/phalanx_m.stl"/>
         </geometry>
-      </collision>      
+      </collision>
+      </xacro:if>
     </link>
     <!-- MIDDLE PHALANGE -->
     <joint name="${ns}_${type}_middle_joint" type="${joint_type}">
@@ -121,11 +125,13 @@
           <mesh filename="package://softhands_description/meshes/softhands/v1.0/common/phalanx_m.stl"/>
         </geometry>
       </visual>
+      <xacro:if value="${useCollisionMesh}">
       <collision>
         <geometry>
           <mesh filename="package://softhands_description/meshes/softhands/v1.0/common/phalanx_m.stl"/>
         </geometry>
-      </collision>        
+      </collision>     
+      </xacro:if>   
     </link>
     <!-- DISTAL PHALANGE -->
     <joint name="${ns}_${type}_distal_joint" type="${joint_type}">
@@ -147,11 +153,13 @@
           <mesh filename="package://softhands_description/meshes/softhands/v1.0/common/fingertip_m.stl"/>
         </geometry>
       </visual>
+      <xacro:if value="${useCollisionMesh}">
       <collision>
         <geometry>
           <mesh filename="package://softhands_description/meshes/softhands/v1.0/common/fingertip_m.stl"/>
         </geometry>
-      </collision>       
+      </collision>    
+      </xacro:if>   
     </link>    
 
   </xacro:macro>
