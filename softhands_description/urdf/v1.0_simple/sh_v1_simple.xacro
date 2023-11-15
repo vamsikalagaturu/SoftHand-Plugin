@@ -76,12 +76,15 @@
 							<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/palm_right_m.stl" />
 						</geometry>
 					</collision>
-					<visual>
+				</xacro:if>
+					
+				<visual>
 						<origin xyz="-0.002 -0.00695 -0.0535" rpy="0 0 0" />
 						<geometry>
 							<mesh filename="package://softhands_description/meshes/softhands/v1.0/right/softhand_base_right_m.stl" />
 						</geometry>
 					</visual>
+				<xacro:if value="${useCollisionMesh}">
 					<collision>
 						<origin xyz="-0.002 -0.00695 -0.0535" rpy="0 0 0" />
 						<geometry>
@@ -136,12 +139,15 @@
 							<mesh filename="package://softhands_description/meshes/softhands/v1.0/left/palm_left_m.stl" />
 						</geometry>
 					</collision>
-					<visual>
+				</xacro:if>
+					
+				<visual>
 						<origin xyz="-0.002 0.00695 -0.0535" rpy="0 0 0" />
 						<geometry>
 							<mesh filename="package://softhands_description/meshes/softhands/v1.0/left/softhand_base_left_m.stl" />
 						</geometry>
 					</visual>
+				<xacro:if value="${useCollisionMesh}">
 					<collision>
 						<origin xyz="-0.002 0.00695 -0.0535" rpy="0 0 0" />
 						<geometry>
